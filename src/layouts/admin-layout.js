@@ -10,7 +10,7 @@ import Content from './content/index';
 export default function AdminLayout(props) {
     let history = useHistory();
     // check login
-    const token = localStorage.getItem("token_admin_together");
+    const token = localStorage.getItem("token_admin_academy");
     useEffect(() => {
         if (!token) {
             history.push("/login");

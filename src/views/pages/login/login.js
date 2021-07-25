@@ -50,10 +50,8 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           setLoadingBtn(false);
-          localStorage.setItem("token_admin_together", res.data.data.token);
-          localStorage.setItem("admin_together_avatar", res.data.data.avatar);
-          localStorage.setItem("admin_together_role", res.data.data.role);
-          localStorage.setItem("admin_together_first_name", res.data.data.first_name);
+          console.log(res);
+          localStorage.setItem("token_admin_academy", res.data.data.accessToken);
           setRedirect(true);
         }
       })
@@ -65,7 +63,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    let token = localStorage.getItem("token_admin_together");
+    let token = localStorage.getItem("token_admin_academy");
     if (token) {
       setRedirect(true);
     }

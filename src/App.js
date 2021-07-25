@@ -1,5 +1,4 @@
 import React from 'react';
-// import dotenv from "dotenv";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './components/fontAwesomeIcon/foneAwesomeIcon';
 import './assets/scss/style.scss';

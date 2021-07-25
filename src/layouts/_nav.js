@@ -33,6 +33,36 @@ export const _nav_admin =  [
         to: '/categories/create',
       }
     ],
-  }
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Academy',
+    to: '/academies',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Teacher',
+    route: '/teacher',
+    icon: 'cil-cursor',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'List teacher',
+        to: '/teachers'
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Create teacher',
+        to: '/teachers/create',
+      }
+    ],
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Student',
+    route: '/students',
+    icon: 'cil-cursor'
+  },
 ];
 
