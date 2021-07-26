@@ -43,7 +43,7 @@ export const _nav_admin =  [
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Teacher',
-    route: '/teacher',
+    route: '/teachers',
     icon: 'cil-cursor',
     _children: [
       {
@@ -61,8 +61,8 @@ export const _nav_admin =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'Student',
-    route: '/students',
-    icon: 'cil-cursor'
+    to: '/students',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
 ];
 
