@@ -10,7 +10,6 @@ import {
     CCol,
     CFormGroup,
     CLabel,
-    CInput,
     CForm,
 
 } from '@coreui/react'

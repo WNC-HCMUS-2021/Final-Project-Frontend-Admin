@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     CButton,
     CCol,
     CFormGroup,
     CLabel,
-    CInput,
     CForm,
+    CInput,
     CModal,
     CModalBody,
     CModalFooter,
@@ -14,29 +14,37 @@ import {
 } from '@coreui/react';
 
 // api
-import { updateOccupation } from '../../apis/occupationApi';
-import { HTTP_STATUS_200 } from '../../constants/constants';
+import { updateCategory } from '../../apis/categoryApi';
 
 
-function ModalEditOccupation({ open, setOpen, occupationInfo, tagList, setTagList, occupationList, setOccupationList, indexOccupation }) {
-    // setUpdateStatus(2);
-    const [fvrName, setFvrName] = useState(occupationInfo ? occupationInfo.name : ""); // occupation name
+function ModelEditCategory({ open, setOpen, catInfo, catList, setCatList, catIndex }) {
+    // state
+    const [catName, setCatName] = useState(catInfo ? catInfo.academy_category_name : "");
+    const [errName, setErrName] = useState("");
 
-    
-
-    const handleSubmit = async () => {
+    // submit form
+    const onSubmit = async () => {
         // validate
-        console.log(fvrName);
-
-
+        console.log(catName);
+        if (catName === "") {
+            setErrName("Please enter occupation name!");
+            return;
+        } else {
+            setErrName("");
+        }
+        // submit
         let data = {
-            
+            academy_category_name: catName,
+            updated_by: 2,
         };
 
-        await updateOccupation(data)
+        await updateCategory(catInfo.academy_category_id ,data)
             .then((res) => {
-                if (res.status === HTTP_STATUS_200) {
-                   
+                if (res.status === 200) {
+                    let newArr = [...catList]; // copying the old datas array
+                    newArr[catIndex] = res.data.data; //replace element with whatever you want to change it to
+                    setCatList(newArr);
+                    setOpen(false);
                 }
             })
             .catch((err) => {
@@ -45,8 +53,9 @@ function ModalEditOccupation({ open, setOpen, occupationInfo, tagList, setTagLis
     }
 
     useEffect(() => {
+        setCatName(catInfo.academy_category_name);
         
-    }, [])
+    }, [catInfo])
 
     return (
         <CModal
@@ -54,38 +63,38 @@ function ModalEditOccupation({ open, setOpen, occupationInfo, tagList, setTagLis
             onClose={() => setOpen(!open)}
         >
             <CModalHeader closeButton>
-                <CModalTitle>Edit Occupation</CModalTitle>
+                <CModalTitle>Edit category</CModalTitle>
             </CModalHeader>
             <CModalBody>
-                <CForm action="" method="post" className="form-horizontal">
+                <CForm className="form-horizontal">
+
                     <CFormGroup row>
                         <CCol md="3">
-                            <CLabel htmlFor="fvr_name">Name</CLabel>
+                            <CLabel htmlFor="cat_name">Name</CLabel>
                         </CCol>
                         <CCol xs="12" md="9">
-                            <CInput type="text" placeholder="Enter occupation name..."
-                               
+                            <CInput type="text" placeholder="Enter category name..."
+                                onChange={(e) => {
+                                    setCatName(e.target.value);
+                                }}
+                                value={catName}
                             />
+                            {errName !== ""
+                                ? <small style={{ color: "red" }}>{errName}</small>
+                                : ""
+                            }
                         </CCol>
                     </CFormGroup>
                 </CForm>
+
             </CModalBody>
             <CModalFooter>
-                <CButton
-                    color="secondary"
-                    onClick={() => setOpen(!open)}
-                >
+                <CButton color="secondary" onClick={() => setOpen(!open)} >
                     Cancel
                 </CButton>
-
-                <CButton
-                    color="success"
-                    onClick={() => handleSubmit()}
-                >
-                    Submit
-                </CButton>
+                <CButton type="butotn" color="success" onClick={() => onSubmit()}>Submit</CButton>
             </CModalFooter>
         </CModal>
     );
 }
-export default ModalEditOccupation;
+export default ModelEditCategory;

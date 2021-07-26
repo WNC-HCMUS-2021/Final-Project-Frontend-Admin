@@ -5,7 +5,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/index'));
 const ListCategory = React.lazy(() => import('./views/category/index'));
 const CreateCategory = React.lazy(() => import('./views/category/create'));
 
-// const ListAcademy = React.lazy(() => import('./views/academy/index'));
+const ListAcademy = React.lazy(() => import('./views/academy/index'));
 // const CreateAcademy = React.lazy(() => import('./views/academy/create'));
 
 const routes = [
@@ -14,6 +14,8 @@ const routes = [
   
   { path: '/categories', exact: true, name: 'Category', component: ListCategory },
   { path: '/categories/create', name: 'Add', component: CreateCategory },
+
+  { path: '/academies', exact: true, name: 'Academy', component: ListAcademy },
 ];
 
 export default routes;

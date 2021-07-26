@@ -17,17 +17,16 @@ export const createCategory = async (data) => {
 }
 
 // update category (cập nhật category)
-export const updateCategory = async (data) => {
+export const updateCategory = async (id, data) => {
     const token = localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_NAME);
-    console.log(data);
-    const url = process.env.REACT_APP_API_BASE_URL + '/admin/academy-category';
+    const url = process.env.REACT_APP_API_BASE_URL + `/admin/academy-category/${id}`;
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'x-access-token': token
         }
     }
-    const res = await axios.put(url, data, config);
+    const res = await axios.patch(url, data, config);
     return res;
 }
 
@@ -47,15 +46,14 @@ export const getListCategory = async (params) => {
 }
 
 // delete category (xoá category)
-export const deleteCategory = async (data) => {
+export const deleteCategory = async (id) => {
     const token = localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_NAME);
-    const url = process.env.REACT_APP_API_BASE_URL + '/admin/academy-category';
+    const url = process.env.REACT_APP_API_BASE_URL + `/admin/academy-category/${id}`;
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'x-access-token': token
-        },
-        data: data
+        }
     }
     const res = await axios.delete(url, config);
     return res;
