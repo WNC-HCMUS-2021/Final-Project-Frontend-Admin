@@ -28,3 +28,18 @@ export const deleteAcademy = async (id) => {
     const res = await axios.delete(url, config);
     return res;
 }
+
+// create new academy (thêm academy)
+export const createAcademy = async (data) => {
+    const token = localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_NAME);
+    console.log(token);
+    const url = process.env.REACT_APP_API_BASE_URL + '/admin/academy';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        }
+    }
+    const res = await axios.post(url, data, config);
+    return res;
+}

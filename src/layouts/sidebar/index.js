@@ -13,12 +13,12 @@ import {
 } from '@coreui/react'
 
 // sidebar nav config
-import {_nav_admin } from '../_nav';
+import {_nav_admin, _nav_teacher } from '../_nav';
 
 const TheSidebar = () => {
     const dispatch = useDispatch()
     const show = useSelector(state => state.sidebarShow)
-    const role_admin = localStorage.getItem("admin_together_role");
+    const role_admin = localStorage.getItem("role_admin_academy");
   
     return (
       <CSidebar
@@ -30,7 +30,7 @@ const TheSidebar = () => {
         <CSidebarNav>
   
           <CCreateElement
-            items={_nav_admin}
+            items={role_admin === "admin" ? _nav_admin : _nav_teacher}
             components={{
               CSidebarNavDivider,
               CSidebarNavDropdown,

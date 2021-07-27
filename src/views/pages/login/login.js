@@ -15,6 +15,7 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import jwt from 'jsonwebtoken';
 
 import LoadingSVG from '../../../assets/svg/Rolling-1s-25px.svg';
 
@@ -50,8 +51,11 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           setLoadingBtn(false);
-          console.log(res);
+          const payload = jwt.decode(res.data.data.accessToken);
           localStorage.setItem("token_admin_academy", res.data.data.accessToken);
+          localStorage.setItem("role_admin_academy", payload.role);
+          localStorage.setItem("userid_admin_academy", payload.userId);
+          localStorage.setItem("username_admin_academy", payload.username);
           setRedirect(true);
         }
       })

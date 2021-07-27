@@ -66,3 +66,34 @@ export const _nav_admin =  [
   },
 ];
 
+export const _nav_teacher =  [
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    }
+  },
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['Pages']
+  },
+  
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Create academy',
+    to: '/academies/create',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  },
+
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'List academy',
+    to: '/academies',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  },
+];
+

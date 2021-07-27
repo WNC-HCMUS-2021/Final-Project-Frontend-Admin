@@ -10,8 +10,8 @@ import {
 
 const TheHeaderDropdown = () => {
   const history = useHistory();
-  const avatar = localStorage.getItem("admin_together_avatar");
-  const first_name = localStorage.getItem("admin_together_first_name");
+  const avatar = localStorage.getItem("avatar_admin_academy");
+  const first_name = localStorage.getItem("username_admin_academy");
 
   const onClickLogout = () => {
     localStorage.clear();
