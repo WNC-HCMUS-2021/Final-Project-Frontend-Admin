@@ -9,7 +9,7 @@ const ListAcademy = React.lazy(() => import('./views/academy/index'));
 // const CreateAcademy = React.lazy(() => import('./views/academy/create'));
 
 const ListTeacher = React.lazy(() => import('./views/teacher/index'));
-
+const CreateTeacher = React.lazy(() => import('./views/teacher/create'));
 
 const ListStudent = React.lazy(() => import('./views/student/index'));
 
@@ -23,6 +23,7 @@ const routes = [
   { path: '/academies', exact: true, name: 'Academy', component: ListAcademy },
 
   { path: '/teachers', exact: true, name: 'Teacher', component: ListTeacher },
+  { path: '/teachers/create', exact: true, name: 'Add', component: CreateTeacher },
 
   { path: '/students', exact: true, name: 'Student', component: ListStudent },
 ];

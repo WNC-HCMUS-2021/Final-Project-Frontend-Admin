@@ -28,3 +28,18 @@ export const deleteTeacher = async (id) => {
     const res = await axios.delete(url, config);
     return res;
 }
+
+// create new category (thêm occupation)
+export const createTeacher = async (data) => {
+    const token = localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_NAME);
+    console.log(token);
+    const url = process.env.REACT_APP_API_BASE_URL + '/admin/user';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        }
+    }
+    const res = await axios.post(url, data, config);
+    return res;
+}
