@@ -91,8 +91,8 @@ export const _nav_teacher =  [
 
   {
     _tag: 'CSidebarNavItem',
-    name: 'List academy',
-    to: '/academies',
+    name: 'List academy of teacher',
+    to: '/teachers/academy',
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
 ];

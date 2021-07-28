@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
@@ -19,23 +19,26 @@ import PageLoading from '../../components/pageLoading/pageLoading';
 
 // api
 import { createAcademy } from '../../apis/academyApi';
+import { getListCategory } from '../../apis/categoryApi';
 
 
 function CreateAcademy() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     // state
     const [loading, setLoading] = useState(false); // loading page
+    const [listCategory, setListCategory] = useState(false);
 
     // submit form
     const onSubmit = async (formValues) => {
         // submit
         let data = {
-            academy_category_id: formValues.academy_category_id,
+            teacher_id: parseInt(localStorage.getItem('userid_admin_academy')),
+            academy_category_id: parseInt(formValues.academy_category_id),
             academy_name: formValues.academy_name,
             description_short: formValues.description_short,
             description_detail: formValues.description_detail,
-            price: formValues.price,
-            price_discount: formValues.price_discount,
+            price: parseInt(formValues.price),
+            price_discount: parseInt(formValues.price_discount),
             created_at: new Date().getTime()
         };
 
@@ -53,11 +56,25 @@ function CreateAcademy() {
             });
     }
 
+    useEffect(() => {
+        setLoading(true);
+        getListCategory()
+            .then((res2) => {
+                if (res2.status === 200) {
+                    setListCategory(res2.data.data.data);
+                    setLoading(false);
+                }
+            })
+            .catch((err2) => {
+                setListCategory([]);
+                setLoading(false);
+            })
+    }, [])
+
     return (
         <React.Fragment>
-            {loading
-                ? <PageLoading />
-                :
+            {!loading && listCategory
+                ?
                 <React.Fragment>
                     <CCard>
                         <CForm onSubmit={handleSubmit(onSubmit)} className="form-horizontal">
@@ -87,8 +104,15 @@ function CreateAcademy() {
                                             <span style={{ color: 'red' }}>Academy category is required!</span>
                                         }
                                         <select {...register("academy_category_id", { required: true })} className="custom-input">
-                                            <option value="Nam">Male</option>
-                                            <option value="Nữ">Female</option>
+                                            {
+                                                listCategory.map(item => {
+                                                    return (
+                                                        <option value={item.academy_category_id} key={item.academy_category_id}>
+                                                            {item.academy_category_name}
+                                                        </option>
+                                                    )
+                                                })
+                                            }
                                         </select>
                                     </CCol>
                                 </CFormGroup>
@@ -168,6 +192,8 @@ function CreateAcademy() {
                         pauseOnHover={false}
                     />
                 </React.Fragment>
+                :
+                <PageLoading />
             }
         </React.Fragment>
     );
