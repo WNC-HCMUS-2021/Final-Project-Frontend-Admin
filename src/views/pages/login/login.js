@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -12,14 +12,14 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import jwt from 'jsonwebtoken';
+  CRow,
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import jwt from "jsonwebtoken";
 
-import LoadingSVG from '../../../assets/svg/Rolling-1s-25px.svg';
+import LoadingSVG from "../../../assets/svg/Rolling-1s-25px.svg";
 
-import { authLogin } from '../../../apis/authApi';
+import { authLogin } from "../../../apis/authApi";
 
 const Login = () => {
   // state
@@ -45,17 +45,21 @@ const Login = () => {
     // submit
     let data = {
       username,
-      password
+      password,
     };
     authLogin(data)
       .then((res) => {
         if (res.status === 200) {
           setLoadingBtn(false);
           const payload = jwt.decode(res.data.data.accessToken);
-          localStorage.setItem("token_admin_academy", res.data.data.accessToken);
+          localStorage.setItem(
+            "token_admin_academy",
+            res.data.data.accessToken
+          );
           localStorage.setItem("role_admin_academy", payload.role);
           localStorage.setItem("userid_admin_academy", payload.userId);
           localStorage.setItem("username_admin_academy", payload.username);
+          localStorage.setItem("refreshToken", res.data.data.refreshToken);
           setRedirect(true);
         }
       })
@@ -64,20 +68,20 @@ const Login = () => {
         setErr("Wrong account information or password!");
         console.log("Error: ", error);
       });
-  }
+  };
 
   useEffect(() => {
     let token = localStorage.getItem("token_admin_academy");
     if (token) {
       setRedirect(true);
     }
-  }, [])
+  }, []);
 
   return (
     <>
-      {redirect
-        ? <Redirect to="/" />
-        :
+      {redirect ? (
+        <Redirect to="/" />
+      ) : (
         <div className="c-app c-default-layout flex-row align-items-center">
           <CContainer>
             <CRow className="justify-content-center">
@@ -89,7 +93,12 @@ const Login = () => {
                         <h1>Login</h1>
                         <p className="text-muted">Sign In to your account</p>
                         {err && (
-                          <div className="errorMsg" style={{ color: 'red', float: 'left' }}>{err}</div>
+                          <div
+                            className="errorMsg"
+                            style={{ color: "red", float: "left" }}
+                          >
+                            {err}
+                          </div>
                         )}
                         <CInputGroup className="mb-3">
                           <CInputGroupPrepend>
@@ -97,8 +106,11 @@ const Login = () => {
                               <CIcon name="cil-user" />
                             </CInputGroupText>
                           </CInputGroupPrepend>
-                          <CInput type="text" placeholder="Username" autoComplete="username"
-                            onChange={e => setUsername(e.target.value)}
+                          <CInput
+                            type="text"
+                            placeholder="Username"
+                            autoComplete="username"
+                            onChange={(e) => setUsername(e.target.value)}
                           />
                         </CInputGroup>
                         <CInputGroup className="mb-4">
@@ -107,8 +119,11 @@ const Login = () => {
                               <CIcon name="cil-lock-locked" />
                             </CInputGroupText>
                           </CInputGroupPrepend>
-                          <CInput type="password" placeholder="Password" autoComplete="current-password"
-                            onChange={e => setPassword(e.target.value)}
+                          <CInput
+                            type="password"
+                            placeholder="Password"
+                            autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </CInputGroup>
                         <CRow>
@@ -118,10 +133,11 @@ const Login = () => {
                               className="px-4"
                               onClick={submitLogin}
                             >
-                              {loadingBtn
-                                ? <img src={LoadingSVG} alt="loading_btn" />
-                                : "Login"
-                              }
+                              {loadingBtn ? (
+                                <img src={LoadingSVG} alt="loading_btn" />
+                              ) : (
+                                "Login"
+                              )}
                             </CButton>
                           </CCol>
                           {/* <CCol xs="6" className="text-right">
@@ -148,9 +164,9 @@ const Login = () => {
             </CRow>
           </CContainer>
         </div>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
