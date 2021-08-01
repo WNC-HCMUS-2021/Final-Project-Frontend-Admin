@@ -87,7 +87,7 @@ function ListAcademy() {
                                     List Academy
                                 </div>
                                 <div>
-                                    <Link to="/academy/create">
+                                    <Link to="/academies/create">
                                         <CButton block color="info">
                                             <FontAwesomeIcon icon="plus" />
                                         </CButton>

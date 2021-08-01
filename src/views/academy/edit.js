@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
     CCard,
@@ -14,6 +14,11 @@ import {
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import PageLoading from '../../components/pageLoading/pageLoading';
 import OutlineEdit from './outline-edit';
 
@@ -32,14 +37,23 @@ function DetailAcademy() {
     const [outlineInfo, setOutlineInfo] = useState();
     const [listCategory, setListCategory] = useState();
     const [loading, setLoading] = useState(false); // loading page
+    const [academyDescDetail, setAcademyDescDetail] = useState(EditorState.createEmpty());
+    const [status, setStatus] = useState(false);
 
     const getDetailAcademy = async (id) => {
         await detailAcademy(id)
             .then((res) => {
-                console.log(res);
+                console.log("detail academy", res);
                 if (res.status === 200) {
                     setAcademyInfo(res.data.data.academy);
                     setOutlineInfo(res.data.data.outline);
+                    setStatus(res.data.data.academy.status === "1" ? true : false);
+                    const contentBlock = htmlToDraft(res.data.data.academy.description_detail);
+                    if (contentBlock) {
+                        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                        const editorState = EditorState.createWithContent(contentState);
+                        setAcademyDescDetail(editorState);
+                      }
 
                     getListCategory()
                         .then((res2) => {
@@ -66,9 +80,10 @@ function DetailAcademy() {
             academy_category_id: parseInt(formValues.academy_category_id),
             academy_name: formValues.academy_name,
             description_short: formValues.description_short,
-            description_detail: formValues.description_detail,
+            description_detail: draftToHtml(convertToRaw(academyDescDetail.getCurrentContent())),
             price: parseInt(formValues.price),
             price_discount: parseInt(formValues.price_discount),
+            status: status === true ? 1 : 0,
             created_at: new Date().getTime()
         };
 
@@ -154,11 +169,12 @@ function DetailAcademy() {
                                             <CLabel htmlFor="description_detail">Description detail</CLabel>
                                         </CCol>
                                         <CCol xs="12" md="9">
-                                            {errors.description_detail &&
-                                                <span style={{ color: 'red' }}>Description detail is required!</span>
-                                            }
-                                            <input className="custom-input" type="text" placeholder="Enter description detail..."
-                                                {...register("description_detail", { required: true })} defaultValue={academyInfo.description_detail}
+                                            <Editor
+                                                editorState={academyDescDetail}
+                                                toolbarClassName="toolbarClassName"
+                                                wrapperClassName="wrapperClassName"
+                                                editorClassName="editorClassName"
+                                                onEditorStateChange={setAcademyDescDetail}
                                             />
                                         </CCol>
                                     </CFormGroup>
@@ -183,6 +199,19 @@ function DetailAcademy() {
                                             <input className="custom-input" type="text" placeholder="Enter price discount of academy..."
                                                 {...register("price_discount")} defaultValue={academyInfo.price_discount}
                                             />
+                                        </CCol>
+                                    </CFormGroup>
+                                    <CFormGroup row>
+                                        <CCol md="3">
+                                            <CLabel htmlFor="status">Status</CLabel>
+                                        </CCol>
+                                        <CCol xs="12" md="9">
+                                            <label className="c-switch c-switch-success" >
+                                                <input type="checkbox" className="c-switch-input" defaultChecked={status}
+                                                    onChange={() => setStatus(!status)}
+                                                />
+                                                <span className="c-switch-slider"></span>
+                                            </label>
                                         </CCol>
                                     </CFormGroup>
                                     <CButton color="info" type="button" onClick={() => {
@@ -218,7 +247,7 @@ function DetailAcademy() {
                             pauseOnHover={false}
                         />
                     </React.Fragment>
-                    : <OutlineEdit outlineInfo={outlineInfo} setView={setView} />
+                    : <OutlineEdit outlineInfo={outlineInfo} setOutlineInfo={setOutlineInfo} setView={setView} />
                 :
                 <PageLoading />
             }

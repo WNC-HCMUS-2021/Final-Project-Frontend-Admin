@@ -73,5 +73,13 @@ export const detailAcademy = async (id) => {
 };
 
 // create outline academy
+export const createOutlineAcademy = async (id, data) => {
+  const res = await axiosInstance.post(`/admin/academy/${id}/outline`, data);
+  return res;
+}
 
 // update outline academy
+export const updateOutlineAcademy = async (id, data) => {
+  const res = await axiosInstance.patch(`/admin/academy/${id}/outline`, data);
+  return res;
+}
