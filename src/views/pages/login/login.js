@@ -65,8 +65,8 @@ const Login = () => {
       })
       .catch((error) => {
         setLoadingBtn(false);
-        setErr("Wrong account information or password!");
-        console.log("Error: ", error);
+        setErr(error.response.data.message);
+        console.log("Error: ", error.response);
       });
   };
 

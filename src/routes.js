@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/index'));
+const Profile = React.lazy(() => import('./views/profile/profile'));
+const ChangePassword = React.lazy(() => import('./views/pages/change-password/change-password'));
 
 const ListCategory = React.lazy(() => import('./views/category/index'));
 const CreateCategory = React.lazy(() => import('./views/category/create'));
@@ -19,6 +21,8 @@ const ListStudent = React.lazy(() => import('./views/student/index'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/profile', name: 'Profile', component: Profile },
+  { path: '/change-password', name: 'Change password', component: ChangePassword },
   
   { path: '/categories', exact: true, name: 'Category', component: ListCategory },
   { path: '/categories/create', name: 'Add', component: CreateCategory },

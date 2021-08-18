@@ -12,15 +12,13 @@ const TheHeaderDropdown = () => {
   const history = useHistory();
   const avatar = localStorage.getItem("avatar_admin_academy");
   const first_name = localStorage.getItem("username_admin_academy");
+  const role = localStorage.getItem("role_admin_academy");
 
   const onClickLogout = () => {
     localStorage.clear();
     history.push('/login');
   }
 
-  const onClickChangePass = () => {
-    history.push('/change-password');
-  }
   return (
     <CDropdown
       inNav
@@ -45,10 +43,26 @@ const TheHeaderDropdown = () => {
         >
           <strong>Account ({first_name})</strong>
         </CDropdownItem>
-                
-        <div className="dropdown-item" onClick={onClickChangePass}>
-          Change password
-        </div>
+
+        {role === 'teacher'
+          ?
+          <div className="dropdown-item" onClick={() => {
+            history.push('/change-password');
+          }}>
+            Change password
+          </div>
+          : null
+        }
+
+        {role === 'teacher'
+          ?
+          <div className="dropdown-item" onClick={() => {
+            history.push('/profile')
+          }}>
+            Profile
+          </div>
+          : null
+        }
 
         <div className="dropdown-item" onClick={onClickLogout}>
           Log out

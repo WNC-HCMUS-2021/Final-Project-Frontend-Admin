@@ -84,13 +84,6 @@ function ListAcademy() {
                                 <div className="card-header_custom_txt">
                                     List Academy
                                 </div>
-                                {/* <div>
-                                    <Link to="/academy/create">
-                                        <CButton block color="info">
-                                            <FontAwesomeIcon icon="plus" />
-                                        </CButton>
-                                    </Link>
-                                </div> */}
                             </div>
                         </CCardHeader>
                         <CCardBody>
@@ -99,6 +92,7 @@ function ListAcademy() {
                                 fields={fields}
                                 itemsPerPage={5}
                                 itemsPerPageSelect
+                                columnFilter
                                 tableFilter
                                 pagination
                                 scopedSlots={{

@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
 
       if (refreshToken) {
         return axiosInstance
-          .post("/auth/refresh", {
+          .post("/admin/auth/refresh", {
             accessToken: localStorage.getItem(
               process.env.REACT_APP_ACCESS_TOKEN_NAME
             ),
@@ -53,11 +53,11 @@ axiosInstance.interceptors.response.use(
           });
       } else {
         console.log("Refresh token is revoke");
-        window.location.href = "/login/";
+        // window.location.href = "/login/";
         localStorage.clear();
       }
     } else {
-      window.location.href = "/login/";
+      // window.location.href = "/login/";
       localStorage.clear();
     }
 

@@ -16,7 +16,6 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { changePasswordUserAdmin } from '../../../apis/useradminApi';
 
 
 const ChangePassword = React.forwardRef(() => {
@@ -41,22 +40,22 @@ const ChangePassword = React.forwardRef(() => {
         };
         console.log(data);
 
-        await changePasswordUserAdmin(data)
-            .then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                    toast.success('Change password success!')
-                    reset();
-                }
-            })
-            .catch((err) => {
-                console.log(err.response);
-                if (err.response.status === 401) {
-                    toast.error(err.response.data.message)
-                } else {
-                    toast.error('Change password fail!')
-                }
-            })
+        // await changePasswordUserAdmin(data)
+        //     .then((res) => {
+        //         console.log(res);
+        //         if (res.status === 200) {
+        //             toast.success('Change password success!')
+        //             reset();
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err.response);
+        //         if (err.response.status === 401) {
+        //             toast.error(err.response.data.message)
+        //         } else {
+        //             toast.error('Change password fail!')
+        //         }
+        //     })
     }
 
     const password = register("password", {
