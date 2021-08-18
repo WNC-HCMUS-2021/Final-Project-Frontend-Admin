@@ -16,10 +16,11 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+import { changePWTeacher } from '../../../apis/teacherApi';
 
 const ChangePassword = React.forwardRef(() => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const teacherId = localStorage.getItem("userid_admin_academy");
     // state
     const [errMsg, setErrMsg] = useState('');
 
@@ -34,28 +35,29 @@ const ChangePassword = React.forwardRef(() => {
 
         // submit
         let data = {
-            password: formValues.password,
-            newpassword: formValues.new_password,
-            confirmnewpassword: formValues.confirm_new_password,
+            user_id: parseInt(teacherId),
+            old_password: formValues.password,
+            password: formValues.new_password,
+            confirm_password: formValues.confirm_new_password,
         };
         console.log(data);
 
-        // await changePasswordUserAdmin(data)
-        //     .then((res) => {
-        //         console.log(res);
-        //         if (res.status === 200) {
-        //             toast.success('Change password success!')
-        //             reset();
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.response);
-        //         if (err.response.status === 401) {
-        //             toast.error(err.response.data.message)
-        //         } else {
-        //             toast.error('Change password fail!')
-        //         }
-        //     })
+        await changePWTeacher(data)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    toast.success('Change password success!')
+                    reset();
+                }
+            })
+            .catch((err) => {
+                console.log(err.response);
+                if (err.response.status === 400) {
+                    toast.error(err.response.data.message)
+                } else {
+                    toast.error('Change password fail!');
+                }
+            })
     }
 
     const password = register("password", {
@@ -159,7 +161,7 @@ const ChangePassword = React.forwardRef(() => {
             </CCard>
             <ToastContainer
                 position="top-right"
-                autoClose={3000}
+                autoClose={4000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

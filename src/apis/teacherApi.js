@@ -35,3 +35,9 @@ export const editTeacher = async (data) => {
   const res = await axiosInstance.put(`/admin/user/`, data);
   return res;
 };
+
+// change password
+export const changePWTeacher = async (data) => {
+  const res = await axiosInstance.put(`/admin/user/change-password`, data);
+  return res;
+};
